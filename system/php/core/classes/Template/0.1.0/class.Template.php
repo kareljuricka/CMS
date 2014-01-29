@@ -2,9 +2,13 @@
 
 class Template{
 
+	private $data = null;
+
 	private $smarty = null;
 	
-	public function __construct(){
+	public function __construct($data){
+
+		$this->data = $data;
 
 		$this->initSmarty();
 
@@ -14,7 +18,7 @@ class Template{
 	 *
 	 */
 	private function initSmarty(){
-		$this->smarty = new Smarty;
+		$this->smarty = new Smarty();
 		# Následující nastavení určitě třeba načítat z databáze
 		$this->smarty->debugging = false;
 		$this->smarty->caching = false;
@@ -25,6 +29,23 @@ class Template{
 	 * @return string html
 	 */
 	public function load(){
+		foreach($this->data as $module => $module_data){
+			$html = "";
+			foreach($module_data as $plugin => $plugin_data){
+				$smarty = new Smarty();
+				$smarty->debugging = false;
+				$smarty->caching = false;
+				$smarty->cache_lifetime = 0;
+
+				# Nutno zde upravit správné načítání celé cesty aby to bylo dynamické - zatím test
+				$smarty->setTemplateDir('C:/wamp/www/cms/system/php/plugins/'.$plugin.'/0.1.0/front/templates');
+
+				$smarty->assign("data",$plugin_data);
+				$html.= $smarty->fetch("default.tpl");
+			}
+			$this->smarty->assign($module,$html);
+		} 
+		
 		return $this->smarty->fetch("default.tpl");
 	}
 

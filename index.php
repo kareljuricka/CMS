@@ -9,6 +9,8 @@
 	// Database connect
 	dibi::connect($db_config);
 
+	# Následující věci přebere controller - viz Evernote nápdy
+
 	// Front init 
 	$front = new Front();
 	$data = $front->getData();

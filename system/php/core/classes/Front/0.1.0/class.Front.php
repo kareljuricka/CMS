@@ -8,7 +8,7 @@ class Front{
 	public function __construct(){
 
 		# Dočasně ruční zadání modulů, po návrhu databáze jejich načtení z databáze
-		$this->modules = array("head","content");
+		$this->modules = array("content");
 
 		// Auto-initializing modules
 		$this->initModules();
@@ -20,8 +20,8 @@ class Front{
 	 */
 	private function initModules(){
 		foreach($this->modules as $module){
-			$class_module = new Module();
-			$this->modules_data[] = $class_module->getData();
+			$class_module = new Module($module);
+			$this->modules_data[$module] = $class_module->getData();
 		}
 	}
 

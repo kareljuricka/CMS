@@ -6,6 +6,7 @@ class Loader{
 
 	private $libs_dir = "system/php/core/libs";
 	private $classes_dir = "system/php/core/classes";
+	private $plugins_dir = "system/php/plugins";
 
 	public function __construct($root) {		
 		// Register methodd "loader" as default auto-loading method
@@ -20,7 +21,8 @@ class Loader{
 	private function loader($object_name) {
 			
 		$route_libs =  $this->root . "/" . $this->libs_dir . "/" . $object_name;
-		$route_classes =  $this->root . "/" . $this->classes_dir . "/" . $object_name; 	 	
+		$route_classes =  $this->root . "/" . $this->classes_dir . "/" . $object_name; 	
+		$route_plugins =  $this->root . "/" . $this->plugins_dir . "/" . $object_name; 	 	
 		
 		if (is_dir($route_libs)) {
 			// It is system lib
@@ -28,7 +30,10 @@ class Loader{
 		} elseif (is_dir($route_classes)) {
 			// It is system class
 			$this->loadClass($object_name);
-		}			
+		} elseif (is_dir($route_plugins)) {
+			// It is system plugin
+			$this->loadPlugin($object_name);
+		}		
 	}
 
 	/** Aceepts name of required lib and trying load her in newest version
@@ -50,6 +55,18 @@ class Loader{
 		$route = $this->root . "/" . $this->classes_dir . "/" . $class_name;
 		$version = $this->selectLatestVersion($route);
 		$file = $this->root . "/" . $this->classes_dir . "/" . $class_name . "/" . $version . "/class." . $class_name . ".php";
+		if (is_file($file)){
+			require $file;
+		}			
+	}
+
+	/** Aceepts name of required plugin and trying load his in newest version
+	 * @param string name of required class
+	 */
+	private function loadPlugin($plugin_name){		
+		$route = $this->root . "/" . $this->plugins_dir . "/" . $plugin_name;
+		$version = $this->selectLatestVersion($route);
+		$file = $this->root . "/" . $this->plugins_dir . "/" . $plugin_name . "/" . $version . "/front/" . $plugin_name . ".php";
 		if (is_file($file)){
 			require $file;
 		}			
