@@ -4,10 +4,10 @@
 
 	// Loader
 	require("system/php/core/classes/class.Loader.php");
-	$loader = new Loader(ROOT);
+	$loader = new Loader($root);
 
 	// Database connect
-	dibi::connect($db_config);
+	//dibi::connect($db_config);
 
 	# Následující věci přebere controller - viz Evernote nápdy
 
@@ -16,7 +16,7 @@
 	$data = $front->getData();
 
 	// Front output
-	$template = new Template($data);
+	$template = new Template($root,$data);
 	$html = $template->load();
 
 	echo $html;

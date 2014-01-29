@@ -7,6 +7,6 @@
 		"password" => "h78uhj6"
 	);	
 
-	CONST ROOT = "C:/wamp/www/cms";
+	$root = dirname(__FILE__);
 
 ?>

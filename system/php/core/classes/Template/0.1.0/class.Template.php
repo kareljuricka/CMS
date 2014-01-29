@@ -3,12 +3,14 @@
 class Template{
 
 	private $data = null;
+	private $root = "";
 
 	private $smarty = null;
 	
-	public function __construct($data){
+	public function __construct($root,$data){
 
 		$this->data = $data;
+		$this->root = $root;
 
 		$this->initSmarty();
 
@@ -38,7 +40,7 @@ class Template{
 				$smarty->cache_lifetime = 0;
 
 				# Nutno zde upravit správné načítání celé cesty aby to bylo dynamické - zatím test
-				$smarty->setTemplateDir('C:/wamp/www/cms/system/php/plugins/'.$plugin.'/0.1.0/front/templates');
+				$smarty->setTemplateDir($this->root.'/system/php/plugins/'.$plugin.'/0.1.0/front/templates');
 
 				$smarty->assign("data",$plugin_data);
 				$html.= $smarty->fetch("default.tpl");
