@@ -27,8 +27,8 @@ class Front{
 				$head_module = $class_module->getData();
 				// Iterate through submodules, set plugin name headPlugin 
 				//-- kvuli zpusobu zpracovani templatu je nutny nazev pluginu
-				foreach($head_module as $key => $value) {		
-					$this->modules_data[$key]['headPlugin'] = $value;
+				foreach($head_module as $submodule_name => $submodul_value) {		
+					$this->modules_data[$submodule_name][$module] = $submodul_value;
 				}
 			}
 			// Standart simple modul
