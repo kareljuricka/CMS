@@ -4,21 +4,14 @@
 
 	// Loader
 	require("system/php/core/classes/class.Loader.php");
-	$loader = new Loader($root);
+	$loader = new Loader($config);
 
-	// Database connect
-	//dibi::connect($db_config);
+	// Getting url and parameters
+	$url = $_GET["url"];
+	unset($_GET["url"]);
 
-	# Následující věci přebere controller - viz Evernote nápdy
-
-	// Front init 
-	$front = new Front();
-	$data = $front->getData();
-
-	// Front output
-	$template = new Template($root,$data);
-	$html = $template->load();
-
-	echo $html;
+	// Controller start
+	$controller = new Controller($config, $url);
+	echo $controller->getHtml();
 
 ?>

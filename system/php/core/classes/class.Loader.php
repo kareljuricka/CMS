@@ -8,11 +8,11 @@ class Loader{
 	private $classes_dir = "system/php/core/classes";
 	private $plugins_dir = "system/php/plugins";
 
-	public function __construct($root) {		
+	public function __construct($config) {		
 		// Register methodd "loader" as default auto-loading method
 		spl_autoload_register(array($this, 'loader'));
 		
-		$this->root = $root;
+		$this->root = $config["root"];
 	}
 
 	/** Accepts name of required class or lib and search her location
