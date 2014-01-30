@@ -13,5 +13,4 @@
 	// Controller start
 	$controller = new Controller($config, $url);
 	echo $controller->getHtml();
-
 ?>
