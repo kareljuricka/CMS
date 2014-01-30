@@ -8,7 +8,7 @@ class Front{
 	public function __construct(){
 
 		# Dočasně ruční zadání modulů, po návrhu databáze jejich načtení z databáze
-		$this->modules = array("content");
+		$this->modules = array("content", "Head");
 
 		// Auto-initializing modules
 		$this->initModules();
@@ -21,7 +21,20 @@ class Front{
 	private function initModules(){
 		foreach($this->modules as $module){
 			$class_module = new Module($module);
-			$this->modules_data[$module] = $class_module->getData();
+
+			// Modul Head consists of submoduls
+			if ($class_module->isHead()) {
+				$head_module = $class_module->getData();
+				// Iterate through submodules, set plugin name headPlugin 
+				//-- kvuli zpusobu zpracovani templatu je nutny nazev pluginu
+				foreach($head_module as $key => $value) {		
+					$this->modules_data[$key]['headPlugin'] = $value;
+				}
+			}
+			// Standart simple modul
+			else
+				$this->modules_data[$module] = $class_module->getData();
+			
 		}
 	}
 

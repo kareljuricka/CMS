@@ -39,9 +39,14 @@ class Template{
 			foreach($module_data as $plugin => $plugin_data){
 				$smarty_plugin = $this->initSmarty();
 				# Nutno zde upravit správné načítání celé cesty aby to bylo dynamické - zatím test
-				$smarty_plugin->setTemplateDir($this->config["root"].'/system/php/plugins/'.$plugin.'/0.1.0/front/templates');
-				$smarty_plugin->assign("data",$plugin_data);
-				$html.= $smarty_plugin->fetch("default.tpl");
+				if ($plugin != 'headPlugin') {
+
+					$smarty_plugin->setTemplateDir($this->config["root"].'/system/php/plugins/'.$plugin.'/0.1.0/front/templates');
+					$smarty_plugin->assign("data",$plugin_data);
+					$html.= $smarty_plugin->fetch("default.tpl");
+				}
+				else
+					$html = $plugin_data;
 			}
 			$this->smarty->assign($module,$html);
 		} 
