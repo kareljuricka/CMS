@@ -11,17 +11,11 @@ class Module{
 
 		$this->module = $module;
 
-		// If it's system module
-		if ($this->isHead()) {
-			$this->headModul();
-		}
-		else {
-			# Dočasně ruční zadání pluginů, po návrhu databáze jejich načtení z databáze
-			$this->plugins = array("Content");
+		# Dočasně ruční zadání pluginů, po návrhu databáze jejich načtení z databáze
+		$this->plugins = array("Content");
 			
-			// Auto-initializing plugins
-			$this->initPlugins();
-		}
+		// Auto-initializing plugins
+		$this->initPlugins();		
 
 	}
 
@@ -33,22 +27,7 @@ class Module{
 			$class_plugin = new Plugin($plugin);
 			$this->plugins_data[$plugin] = $class_plugin->getData();
 		}
-	}
-
-	/** Instanciate modul Head
-	 *
-	 */
-	private function headModul(){
-		$head_modul = new Head();
-		$this->plugins_data = $head_modul->getData();
-	}
-
-	/**
-	 *
-	 */
-	public function isHead(){
-		return ($this->module == 'Head') ? true : false;
-	}
+	}	
 
 	/**
 	 *

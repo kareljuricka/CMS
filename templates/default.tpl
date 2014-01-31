@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="author" content="{$author}">
-		<meta name="description" content="{$description}">
-		<title>{$title}</title>
+		{include file="_head.tpl"}
 	</head>
 	<body>
 		{$content}

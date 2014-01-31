@@ -18,12 +18,13 @@ class Controller{
 		if($this->goToBack()){
 			// Back init
 			$back = new Back();
-			$data = $back->getData();
+			$data[] = $back->getData();
 			
 		} else {
 			// Front init 
 			$front = new Front();
-			$data = $front->getData();			
+			$data["modules_data"] = $front->getModulesData();	
+			$data["head_data"] = $front->getHeadData();			
 		}
 
 		// Template init and parsing

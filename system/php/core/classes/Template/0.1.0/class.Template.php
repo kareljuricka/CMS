@@ -19,7 +19,7 @@ class Template{
 		$this->parse();
 	}
 
-	/* Initializing Smarty template system
+	/** Initializing Smarty template system
 	 * @return object smarty instance
 	 */
 	private function initSmarty(){
@@ -30,17 +30,35 @@ class Template{
 		return $smarty;
 	}
 
-	/* Parsing data to template
-	 * @return string html
+	/** Parsing data to template
+	 *
 	 */
 	private function parse(){
-		foreach($this->data as $module => $module_data){
+			
+		$this->assignModules();
+		$this->assignHead();	
+
+		$this->html = $this->smarty->fetch("default.tpl");
+	}
+	
+	/** Assign header data to smarty 
+	 * 
+	 */
+	private function assignHead(){
+		$this->smarty->assign("head", $this->data["head_data"]);
+	}
+	
+	/** Parse and assign modules to smarty 
+	 * 
+	 */
+	private function assignModules(){
+		// Parsing and assign modules
+		foreach($this->data["modules_data"] as $module => $module_data){
 			$html = "";
 			foreach($module_data as $plugin => $plugin_data){
 				$smarty_plugin = $this->initSmarty();
 				# Nutno zde upravit správné načítání celé cesty aby to bylo dynamické - zatím test
 				if ($plugin != 'Head') {
-
 					$smarty_plugin->setTemplateDir($this->config["root"].'/system/php/plugins/'.$plugin.'/0.1.0/front/templates');
 					$smarty_plugin->assign("data",$plugin_data);
 					$html.= $smarty_plugin->fetch("default.tpl");
@@ -49,9 +67,7 @@ class Template{
 					$html = $plugin_data;
 			}
 			$this->smarty->assign($module,$html);
-		} 
-		
-		$this->html = $this->smarty->fetch("default.tpl");
+		}
 	}
 
 	public function getHtml(){
