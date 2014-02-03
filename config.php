@@ -1,5 +1,4 @@
-<?php
-
+<?php	
 	$config = array();
 
 	$db_config = array(
@@ -17,6 +16,5 @@
 	$config["smarty"]["debugging"] = false;
 	$config["smarty"]["cache_lifetime"] = 0;
 
-	$config["root"] = dirname(__FILE__);
-
+	$config["root"] = dirname(__FILE__);	
 ?>
