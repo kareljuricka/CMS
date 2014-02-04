@@ -47,7 +47,9 @@ class Error{
 		
 		$text = "Error: $err_name - $err_str; Line: $err_line; File: $err_file\n";
 		
-		file_put_contents($this->log_file, $date.$client_ip." ".$text, FILE_APPEND);	
+		file_put_contents($this->log_file, $date.$client_ip." ".$text, FILE_APPEND);
+		
+		$this->showError($text);	
 	}
 	
 	/** Catch PHP Fatal Error and write it to the log
@@ -64,6 +66,8 @@ class Error{
 			$text = "Fatal Error: $err_str; Line: $err_line; File: $err_file\n";
 			
 			file_put_contents($this->log_file, $date.$client_ip." ".$text, FILE_APPEND);
+			
+			$this->showError($text);
 		}			
 	}
 	
@@ -79,6 +83,20 @@ class Error{
 		$text = "Exception: ".$e->getMessage()."; Line: ".$e->getLine()."; File: ".$e->getFile()."; Trace: ".$trace."\n";
 		
 		file_put_contents($this->log_file, $date.$client_ip." ".$text, FILE_APPEND);
+		
+		$this->showError($text);
+	}
+	
+	/** If develop_mode is on, show error to screen
+	 * @param string error
+	 */
+	private function showError($error){
+		$registry = Registry::getRegistry();
+		$config = $registry->get("config");
+		
+		if($config["develop_mode"]){			
+			echo $error."<br />";
+		}
 	}
 	
 }

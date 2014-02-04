@@ -58,16 +58,13 @@ class Template{
 		// Parsing and assign modules
 		foreach($this->data["modules_data"] as $module => $module_data){
 			$html = "";
-			foreach($module_data as $plugin => $plugin_data){
+			foreach($module_data as $plugin => $plugin_data){				
+				$version = $plugin_data["version"];
+				$data = $plugin_data["data"];				
 				$smarty_plugin = $this->initSmarty();
-				# Nutno zde upravit správné načítání celé cesty aby to bylo dynamické - zatím test
-				if ($plugin != 'Head') {
-					$smarty_plugin->setTemplateDir($this->config["root"].'/system/php/plugins/'.$plugin.'/0.1.0/front/templates');
-					$smarty_plugin->assign("data",$plugin_data);
-					$html.= $smarty_plugin->fetch("default.tpl");
-				}
-				else
-					$html = $plugin_data;
+				$smarty_plugin->setTemplateDir($this->config["root"].'/system/php/plugins/'.$plugin.'/'.$version.'/front/templates');
+				$smarty_plugin->assign("data", $data);
+				$html.= $smarty_plugin->fetch("default.tpl");
 			}
 			$this->smarty->assign($module,$html);
 		}

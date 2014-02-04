@@ -1,6 +1,8 @@
 <?php
 
 class Content{
+	
+	private $version = "0.1.0";
 
 	public function __construct(){
 
@@ -11,7 +13,10 @@ class Content{
 	 */
 	public function getData(){
 		# V rámci testu vracíme test data
-		return "Lorem ipsum dolor <br />site amet!";
+		$data = "Lorem ipsum dolor <br />site amet!";
+		
+		$return = array("version" => $this->version, "data" => $data);		
+		return $return;
 	}
 		
 }

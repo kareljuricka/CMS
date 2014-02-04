@@ -7,6 +7,8 @@
 		"username" => "cms",
 		"password" => "h78uhj6"
 	);	
+	
+	$config["develop_mode"] = true;
 
 	$config["admin_url"] = "admin";
 

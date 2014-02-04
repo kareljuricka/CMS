@@ -11,11 +11,11 @@ class Controller{
 	
 	public function __construct($config,$url){
 		
-		// Initiate error handlers
+		// Initialize error handlers
 		$error = new Error($config["root"]);
 		set_error_handler(array($error,"catchError"));
 		set_exception_handler(array($error,"catchException"));
-		register_shutdown_function(array($error,"catchFatalError"));	
+		register_shutdown_function(array($error,"catchFatalError"));
 			
 		// Creating registry and bind config
 		$this->registry = Registry::getRegistry();
@@ -26,7 +26,7 @@ class Controller{
 		$this->config = $config;			
 		
 		// Proceed requested url
-		$this->compileUrl();
+		$this->explodeUrl();
 		
 		// Getting data for template
 		if($this->goToBack()){
@@ -49,7 +49,7 @@ class Controller{
 	/* Exploding and compiling requested url
 	 *
 	 */
-	private function compileUrl(){
+	private function explodeUrl(){
 		// Last slash removing
 		$url = preg_replace("~/$~", '', trim($this->url));		
 
