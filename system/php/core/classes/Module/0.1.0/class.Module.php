@@ -1,13 +1,19 @@
 <?php
 
 class Module{
+	
+	private $config = null;
+	private $registry = null;
 
 	private $module = "";
-
 	private $plugins = array();
 	private $plugins_data = array();
 
 	public function __construct($module){
+		
+		// Bind registry and config
+		$this->registry = Registry::getRegistry();
+		$this->config = $this->registry->get("config");
 
 		$this->module = $module;
 

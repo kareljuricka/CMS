@@ -8,10 +8,13 @@ class Template{
 	private $html = null;
 	private $smarty = null;
 
-	public function __construct($config, $data){
+	public function __construct($data){
 
 		$this->data = $data;
-		$this->config = $config;
+		
+		// Bind config
+		$registry = Registry::getRegistry();
+		$this->config = $registry->get("config");
 
 		$this->smarty = $this->initSmarty();
 

@@ -1,20 +1,34 @@
 <?php
 
 class Controller{
-
-	private $url = null;
-	private $url_pieces = null;
-	private $html = null;
+	
+	private $registry = null;
 	private $config = null;
 
+	private $url = null;	
+	private $url_pieces = null;
+	private $html = null;
+	
 	public function __construct($config,$url){
-		$this->config = $config;
+		
+		// Initiate error handlers
+		$error = new Error($config["root"]);
+		set_error_handler(array($error,"catchError"));
+		set_exception_handler(array($error,"catchException"));
+		register_shutdown_function(array($error,"catchFatalError"));	
+			
+		// Creating registry and bind config
+		$this->registry = Registry::getRegistry();
+		$this->registry->put("config", $config);
+		
+		// Save requested url and config
 		$this->url = $url;
-
+		$this->config = $config;			
+		
+		// Proceed requested url
 		$this->compileUrl();
 		
 		// Getting data for template
-		// Go to Front or Back?
 		if($this->goToBack()){
 			// Back init
 			$back = new Back();
@@ -28,7 +42,7 @@ class Controller{
 		}
 
 		// Template init and parsing
-		$template = new Template($this->config,$data);
+		$template = new Template($data);
 		$this->html = $template->getHtml();		
 	}
 
@@ -36,7 +50,7 @@ class Controller{
 	 *
 	 */
 	private function compileUrl(){
-		// Last / removing
+		// Last slash removing
 		$url = preg_replace("~/$~", '', trim($this->url));		
 
 		if(count($url)){
@@ -46,10 +60,10 @@ class Controller{
 			
 	}
 
-	/* Decision on base of url, if controller gos to Back
-	 *
+	/** Decision on base of url, if controller gos to Back
+	 * @return bool going to back
 	 */
-	private function goToBack(){
+	private function goToBack(){		
 		if($this->url_pieces[0] == $this->config["admin_url"]){
 			return true;
 		}

@@ -1,14 +1,12 @@
 <?php	
 	$config = array();
 
-	$db_config = array(
+	$config["db_config"] = array(
 		"host" => "localhost",
 		"database" => "cms",
 		"username" => "cms",
 		"password" => "h78uhj6"
 	);	
-
-	$config["db_config"] = $db_config;
 
 	$config["admin_url"] = "admin";
 

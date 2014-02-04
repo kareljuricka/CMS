@@ -1,12 +1,19 @@
 <?php
 
 class Front{
+	
+	private $config = null;
+	private $registry = null;
 
 	private $modules = array();
 	private $modules_data = array();
 	private $head_data = array();
 	
 	public function __construct(){
+		
+		// Bind registry and config
+		$this->registry = Registry::getRegistry();
+		$this->config = $this->registry->get("config");
 
 		# Dočasně ruční zadání modulů, po návrhu databáze jejich načtení z databáze
 		$this->modules = array("content");
